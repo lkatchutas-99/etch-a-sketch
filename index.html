@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etch A Sketch</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="modal">
+        <div class="modal-container">
+        <h1>Welcome to Etch A Sketch</h1>
+        <p>
+            There are various drawing options on the left to choose from.
+            You can also set a new pixel size, clear the board, use an eraser, and view the outline 
+            for the pixels<br>
+            
+            <ul><b>Note:</b>
+                <li>Colored crossovers will darken the pixel by 10%.</li>
+                <li>The 'Show pixel lines' feature will not work if pixels are 64x64 or greater</li>
+            </ul> 
+        </p>
+        <div>
+        <p>Enter pixel amount here, values must be between 2 and 100 inclusive</p>
+         <div class="input">
+        <input placeholder="Enter Here" type="text" class="first-pixel-selector">
+        <button class="set-pixels">Start Drawing</button>
+        </div>
+        </div>
+        
+    </div> 
+    </div>
+    <div class="content">
+    <div class="palette color-options">
+        <div class="button-container">
+        
+                <div class="left-side">
+                    <p class="description">Black</p>
+                    <div value="black" class="color-mode-buttons black-button"></div>
+                </div>
+                <div class="right-side">
+                    <p class="description">Change Pixels</p>
+                    <input type="text" class="pixel-selector">
+                    <button class="set-pixels">Set Pixels</button>
+                </div>
+        </div>
+        <div class="button-container">
+            <div class="left-side">
+            <p class="description">Random RGB only</p>
+        <div value="RGB" class="color-mode-buttons rgb-button">
+            <div class="stripe first-stripe"></div>
+            <div class="stripe second-stripe"></div>
+            <div class="stripe third-stripe"></div>
+        </div>
+        </div>
+        <div class="right-side">
+            <p class="description">Clear Board</p>
+            <button value="clear" class="color-mode-buttons clear-board-button">Clear board</button>
+        </div>
+        </div>
+        <div class="button-container">
+            <div class="left-side">
+            <p class="description">Random Color</p>
+            <div value="all" class="color-mode-buttons all-colors-button">
+            <h1>?</h1>
+            </div>
+            </div>
+            <div class="right-side">
+                <p class="description">Eraser</p>
+                <div value="eraser" class="color-mode-buttons eraser"></div>
+            </div>
+        </div>
+        <div class="button-container">
+            <div class="left-side">
+            <p class="description">Choose a color</p>
+            <input value="choose" type="color" class="color-mode-buttons choose-color-button">
+            </div>
+            <div class="right-side">
+                <p class="description">Hover to show pixel lines</p>
+            <div value="grid" class="color-mode-buttons view-grid"></div>
+            </div>
+        </div>
+    </div>
+    <div class="etch-container"></div>
+    </div>
+</body>
+ <script src="js/script.js"></script>
+</html>
