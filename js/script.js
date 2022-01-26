@@ -23,7 +23,7 @@ window.onload = () => {
     const eraserButton = document.querySelector('.eraser');
 
     // Node Lists
-    const setSize = document.querySelectorAll('.set-pixels');
+    const setPixelButtons = document.querySelectorAll('.set-pixels');
     const colorModeButtons = document.querySelectorAll('.color-mode-buttons');
     
     // Data object
@@ -39,15 +39,14 @@ window.onload = () => {
     };
 
     // ---------------------------------------------------------------------------------------
-    // Initialize board
+    // Initialize/reset board section
 
-    // Display and hide pixel lines
     viewGridHover.addEventListener('mouseover', showGrid);
     viewGridHover.addEventListener('mouseout', hideGrid);
 
-    // clear 
-    clearBoardButton.addEventListener('click', setAllPixelsWhite)
-    setSize.forEach(i => i.addEventListener('click', setPixels));
+    clearBoardButton.addEventListener('click', setAllPixelsWhite);
+
+    setPixelButtons.forEach(i => i.addEventListener('click', setPixels));
     
     buildPixels(viewGridHover, 3, 'view-grid-row', 'view-grid-column');
 
@@ -97,8 +96,10 @@ window.onload = () => {
             removeAllPixels();
             data.pixelAmt = modal.style.display === 'none' ? pixelSelector.value : modalPixelSelector.value
             buildPixels(etchContainer, data.pixelAmt, 'row', 'column');
+
             content.style.pointerEvents = 'auto';
             modal.style.display = 'none';
+
             data.currentColumns = document.querySelectorAll('.column');
             data.currentColumns.forEach(i => i.addEventListener('mouseover', drawPixel));
             modalPixelSelector.value = '';
@@ -106,7 +107,7 @@ window.onload = () => {
         }
     }
 
-    // Add pixels to anything
+    // Add pixels to given container
     function buildPixels(currentContainer, size, rowClass, columnClass) {
         let column = document.createElement('div');
         column.classList.add(columnClass);
@@ -122,7 +123,7 @@ window.onload = () => {
     }
 
     //-----------------------------------------------------------------------
-    // Mode Changer
+    // Mode Changer section
 
     // Increase color
     function increaseHsl() {
@@ -130,7 +131,7 @@ window.onload = () => {
         allColorsButton.style.cssText = `background-color: hsl(${data.hslColor++}, 100%, 50%);`;
     }
 
-    // alternate RGB strips for each call
+    // Alternate RGB stripes for each call
     function alternateRgbStripes() {
         if (firstStripe.style.backgroundColor === 'red') {
             firstStripe.style.backgroundColor = 'blue';
@@ -149,7 +150,7 @@ window.onload = () => {
         }
     }
 
-    // Alternate black and white for each call
+    // Alternate black and white
     function alternateBlackWhite() {
         if (blackButton.style.backgroundColor === 'black') {
             blackButton.style.backgroundColor = 'white'
@@ -159,7 +160,7 @@ window.onload = () => {
         }
     }
 
-    // alternate eraser button color
+    // Alternate eraser button color
     function alternateEraser () {
         console.log(eraserButton.style.backgroundColor);
         if (eraserButton.style.backgroundColor === 'white') {
@@ -180,36 +181,38 @@ window.onload = () => {
 
     // change color mode when a button is clicked
     function changeColorMode() {
-        stopButtonVisualEffects();
-        blackButton.style.backgroundColor = 'black';
-        allColorsButton.style.backgroundColor = 'white';
-        eraserButton.style.backgroundColor = '#fa9cb0';
-        
         let setMode = this.attributes[0].value;
+        if (setMode != 'grid') {
+            stopButtonVisualEffects();
 
-        switch (setMode) {
-        case 'black':
-            data.blackIntervalID = setInterval(alternateBlackWhite, 500);
-            break;
-        case 'RGB': 
-            data.rgbIntervalID = setInterval(alternateRgbStripes, 300);
-            break;
-        case 'all': 
-            data.allColorsIntervalID = setInterval(increaseHsl, 45);
-            break;
-        case 'eraser': {
-            data.eraserIntervalID = setInterval(alternateEraser, 800);
-        }
-        }
+            blackButton.style.backgroundColor = 'black';
+            allColorsButton.style.backgroundColor = 'white';
+            eraserButton.style.backgroundColor = '#fa9cb0';
         
-        data.colorMode = setMode;
+
+            switch (setMode) {
+                case 'black':
+                    data.blackIntervalID = setInterval(alternateBlackWhite, 500);
+                    break;
+                case 'RGB': 
+                    data.rgbIntervalID = setInterval(alternateRgbStripes, 300);
+                    break;
+                case 'all': 
+                    data.allColorsIntervalID = setInterval(increaseHsl, 45);
+                    break;
+                case 'eraser': {
+                    data.eraserIntervalID = setInterval(alternateEraser, 800);
+                }
+            }
+            data.colorMode = setMode;
+        }
     }
     
     // Initialize
     colorModeButtons.forEach(i => i.addEventListener('click', changeColorMode));
 
-    //------------------------------------------------------------------------------------------------------------
-    // Pixel settings
+    //-------------------------------------------------------------------------------------------------------------------------------
+    // Mark Pixels section
 
     // Generate random color
     function generateAnyColor(pixel) {
